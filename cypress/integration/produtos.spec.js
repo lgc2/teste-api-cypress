@@ -1,10 +1,18 @@
 /// <reference types="cypress" />
 
+import contrato from '../contracts/produtos.contract.js'
+
 describe('Teste da Funcionalidade Produtos', () => {
 
     let token
     before(() => {
         cy.token("fulano@qa.com", "teste").then(tkn => { token = tkn })
+    });
+
+    it('Deve validar contrato de produtos', () => {
+        cy.request('produtos').then(response => {
+            return contrato.validateAsync(response.body)
+        })
     });
 
     it('Listar produtos', () => {
@@ -70,7 +78,7 @@ describe('Teste da Funcionalidade Produtos', () => {
                 url: `produtos/${id}`,
                 headers: { authorization: token },
                 body: {
-                    "nome": "Produto editado X",
+                    "nome": `Produto editado ${Math.floor(Math.random() * 10000)}X`,
                     "preco": 470,
                     "descricao": "Mouse",
                     "quantidade": 381
