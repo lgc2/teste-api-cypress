@@ -103,4 +103,8 @@ dist
 # TernJS port file
 .tern-port
 
+# Evidências em vídeos
 videos/
+
+# Report
+mochawesome-report/
